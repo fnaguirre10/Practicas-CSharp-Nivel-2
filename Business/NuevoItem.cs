@@ -12,6 +12,7 @@ using Dominio;
 using NegocioItem;
 using System.Configuration;
 using System.Xml.Linq;
+using System.Drawing.Text;
 
 namespace Negocio
 {
@@ -31,7 +32,7 @@ namespace Negocio
             Text = "Modificar Item";
         }
 
-        
+
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -110,6 +111,14 @@ namespace Negocio
             {
                 MessageBox.Show(ex.ToString());
             }
+            //foreach (char character in txtPrecio.Text)
+            //{
+            //    if (!(char.IsNumber(character)))
+            //    {
+            //        MessageBox.Show("Solo puedes insertar números en este campo.");
+            //    }
+
+            //}
         }
 
         private void txtImagenUrl_Leave(object sender, EventArgs e)
@@ -139,5 +148,22 @@ namespace Negocio
                 cargarImagen(archivo.FileName);
             }
         }
+
+        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+            
+
+        }
+
     }
 }
